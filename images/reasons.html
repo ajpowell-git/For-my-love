@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Why I Love You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --peach:  #ff8c69;
+      --coral:  #e85d5d;
+      --cream:  #fff8f0;
+      --warm:   #fde8d8;
+      --brown:  #4a2010;
+      --soft:   #ffd4bb;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--cream);
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    /* Warm sunburst background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% -10%, rgba(255,140,105,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 100% 100%, rgba(232,93,93,0.12) 0%, transparent 50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(255,248,240,0.92);
+      backdrop-filter: blur(8px);
+      display: flex; justify-content: center; gap: 2rem;
+      padding: 1rem;
+      z-index: 100;
+      border-bottom: 2px solid var(--soft);
+    }
+    nav a {
+      text-decoration: none; color: var(--coral);
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem; letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--peach); }
+
+    /* Page header */
+    .page-header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 9rem 2rem 3rem;
+    }
+    .page-header .number-badge {
+      font-size: 3.5rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .page-header h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2rem, 5.5vw, 4rem);
+      color: var(--coral);
+      margin-bottom: 0.6rem;
+    }
+    .page-header p {
+      color: rgba(74,32,16,0.65);
+      font-style: italic;
+      font-size: 1rem;
+    }
+
+    /* Counter display */
+    .counter {
+      position: relative; z-index: 1;
+      text-align: center;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem;
+      color: var(--coral);
+      margin-bottom: 3rem;
+    }
+    .counter strong { font-size: 2rem; }
+
+    /* Reasons grid */
+    .reasons-grid {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.3rem;
+      max-width: 960px;
+      margin: 0 auto 5rem;
+      padding: 0 2rem;
+    }
+    .reason-card {
+      background: var(--white, #fff);
+      border-radius: 16px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 3px 18px rgba(255,140,105,0.12);
+      border: 1px solid rgba(255,140,105,0.2);
+      transition: transform 0.22s, box-shadow 0.22s;
+      position: relative;
+      overflow: hidden;
+    }
+    .reason-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--peach), var(--coral));
+    }
+    .reason-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 32px rgba(255,140,105,0.22);
+    }
+    .reason-num {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 2rem;
+      color: var(--soft);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .reason-card p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--brown);
+    }
+
+    /* Add-a-reason form (interactive) */
+    .add-section {
+      position: relative; z-index: 1;
+      max-width: 600px;
+      margin: 0 auto 5rem;
+      padding: 0 2rem;
+      text-align: center;
+    }
+    .add-section h2 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.4rem;
+      color: var(--coral);
+      margin-bottom: 1rem;
+    }
+    .add-section p {
+      font-size: 0.88rem;
+      color: rgba(74,32,16,0.6);
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+    .add-row {
+      display: flex; gap: 0.7rem;
+    }
+    .add-row input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--soft);
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      color: var(--brown);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .add-row input:focus { border-color: var(--peach); }
+    .add-row button {
+      background: var(--coral);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.75rem 1.4rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .add-row button:hover { background: var(--peach); }
+
+    .nav-bottom {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; gap: 1.5rem;
+      padding: 2rem 2rem 4rem;
+      flex-wrap: wrap;
+    }
+    .nav-bottom a {
+      background: rgba(255,140,105,0.15);
+      border: 1px solid var(--peach);
+      color: var(--coral);
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .nav-bottom a:hover {
+      background: var(--peach);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="devotion.html">📖 Devotion</a>
+    <a href="gallery.html">📸 Gallery</a>
+    <a href="reasons.html">💛 Reasons</a>
+    <a href="letter.html">✉️ Letter</a>
+  </nav>
+
+  <div class="page-header">
+    <span class="number-badge">💛</span>
+    <h1>Why I Love You</h1>
+    <p>A list I'll keep adding to for the rest of my life.</p>
+  </div>
+
+  <div class="counter">
+    <strong id="reason-count">0</strong> reasons and counting…
+  </div>
+
+  <!--
+    ═══════════════════════════════════════════════════════
+    ✏️ HOW TO ADD YOUR OWN REASONS:
+    Each <div class="reason-card"> is one reason.
+    Edit the text inside <p> with your real reasons.
+    The numbers are auto-set by CSS — just add more cards!
+
+    Add as many as you want — the grid adjusts automatically.
+    ═══════════════════════════════════════════════════════
+  -->
+  <div class="reasons-grid" id="reasons-grid">
+
+    <div class="reason-card">
+      <div class="reason-num">01</div>
+      <p>You are kind and understanding to a magnitude I could never imagine.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">02</div>
+      <p>Your love of the lord is so strong and so infectious that it has taken over me and made me want ot be a better man for you.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">03</div>
+      <p>You are the most adventurous person I have ever met. SO much so that even I who was so focused on surviving in this world that I could never imagine being able to travel.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">04</div>
+      <p>You are one of the most carring people I know. The care you exhibit manifests in the way you listen to others, the way you offer support without being asked, and the way you make everyone around you feel valued.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">05</div>
+      <p>You have such a beautiful soul and a heart of gold. The courage that you show in the face of adversity is truly inspiring. The fact that you are able to keep going even when things get tough is amazing.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">06</div>
+      <p>You have an incredible sense of humor that lights up any room you enter. Your laughter is contagious, and it has the power to lift my spirits on even the gloomiest days.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">07</div>
+      <p>Your have this amazing ability to keep seeking a better version of yourself no matter how challenging life gets. That is truly inspiring to always find a way to improve my that be god or your physical health.= or anything else for you.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">08</div>
+      <p>The feeling I get when you walk closer to me. Every step we take towards eachother is a euphoric feeling.</p>
+    </div>
+
+    <!--
+      ✏️ Add more by copying a block above and pasting it here.
+         Change the number and the text.
+    -->
+
+  </div>
+
+  <!-- BONUS: Interactive "add a reason" field -->
+  <div class="add-section">
+    <h2>Add a New Reason</h2>
+    <p>(Type a reason and press ➕ — it appears on the page instantly!<br/>
+       Note: new reasons only last until the page refreshes since this is a static site.)</p>
+    <div class="add-row">
+      <input type="text" id="new-reason" placeholder="Because you…" maxlength="200"/>
+      <button onclick="addReason()">➕</button>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="gallery.html">← Gallery</a>
+    <a href="letter.html">My Letter →</a>
+  </div>
+
+  <script>
+    // ── Count the initial reasons ──
+    function updateCount() {
+      const cards = document.querySelectorAll('.reason-card');
+      document.getElementById('reason-count').textContent = cards.length;
+    }
+    updateCount();
+
+    // ── Add a reason interactively ──
+    // When she (or you) types something and clicks ➕,
+    // a new card appears in the grid automatically.
+    function addReason() {
+      const input = document.getElementById('new-reason');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const grid = document.getElementById('reasons-grid');
+      const existing = grid.querySelectorAll('.reason-card').length;
+      const num = String(existing + 1).padStart(2, '0');
+
+      const card = document.createElement('div');
+      card.classList.add('reason-card');
+      card.innerHTML = `<div class="reason-num">${num}</div><p>${text}</p>`;
+
+      // Animate in
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      grid.appendChild(card);
+      requestAnimationFrame(() => {
+        card.style.transition = 'opacity 0.4s, transform 0.4s';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      });
+
+      input.value = '';
+      updateCount();
+    }
+
+    // Allow pressing Enter to add
+    document.getElementById('new-reason').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addReason();
+    });
+  </script>
+</body>
+</html>
