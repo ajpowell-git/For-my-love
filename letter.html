@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Letter to You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --deep-rose: #7b1a38;
+      --rose:      #b5294e;
+      --champagne: #f5e6c8;
+      --parchment: #fdf5e6;
+      --ink:       #2c0e1a;
+      --gold:      #c9963b;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--deep-rose);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Patterned background texture */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+        transparent 1px, transparent 12px
+      );
+      pointer-events: none; z-index: 0;
+    }
+
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(123,26,56,0.95);
+      backdrop-filter: blur(8px);
+      display: flex; justify-content: center; gap: 2rem;
+      padding: 1rem;
+      z-index: 100;
+      border-bottom: 1px solid rgba(201,150,59,0.5);
+    }
+    nav a {
+      text-decoration: none; color: var(--champagne);
+      font-family: 'Crimson Text', serif;
+      font-size: 1.05rem; letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold); }
+
+    /* Wax seal entrance animation */
+    .seal-wrap {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 9rem 2rem 2rem;
+    }
+    .seal {
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #e8486a, var(--deep-rose));
+      font-size: 2.5rem;
+      box-shadow:
+        0 0 0 6px rgba(201,150,59,0.4),
+        0 0 0 8px rgba(201,150,59,0.15),
+        0 8px 32px rgba(0,0,0,0.4);
+      animation: sealPop 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+      cursor: pointer;
+    }
+    @keyframes sealPop {
+      from { transform: scale(0) rotate(-20deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+
+    /* The letter */
+    .letter-outer {
+      position: relative; z-index: 1;
+      max-width: 720px;
+      margin: 2rem auto 5rem;
+      padding: 0 1.5rem;
+    }
+    .letter-paper {
+      background: var(--parchment);
+      border-radius: 6px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.4),
+        inset 0 0 80px rgba(201,150,59,0.06);
+      padding: 4rem 4rem 5rem;
+      position: relative;
+      animation: letterReveal 1s ease both;
+      animation-delay: 0.4s;
+    }
+    @keyframes letterReveal {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Top fold shadow */
+    .letter-paper::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--gold), rgba(201,150,59,0.3), var(--gold));
+      border-radius: 6px 6px 0 0;
+    }
+
+    /* Lined paper effect (subtle) */
+    .letter-paper::after {
+      content: '';
+      position: absolute; inset: 4rem;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 2.2rem,
+        rgba(181,41,78,0.07) 2.2rem,
+        rgba(181,41,78,0.07) 2.3rem
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .letter-date {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      position: relative; z-index: 1;
+    }
+
+    .letter-salutation {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+      position: relative; z-index: 1;
+    }
+
+    .letter-body {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.18rem;
+      line-height: 2.1;
+      color: var(--ink);
+      position: relative; z-index: 1;
+    }
+    .letter-body p { margin-bottom: 1.4rem; }
+
+    .letter-sign {
+      position: relative; z-index: 1;
+      margin-top: 2.5rem;
+      font-family: 'Dancing Script', cursive;
+    }
+    .letter-sign .closing {
+      font-size: 1.2rem;
+      color: var(--ink);
+      margin-bottom: 0.8rem;
+    }
+    .letter-sign .name {
+      font-size: 2.4rem;
+      color: var(--rose);
+    }
+
+    /* Post-script */
+    .ps {
+      position: relative; z-index: 1;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(181,41,78,0.2);
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(44,14,26,0.65);
+    }
+
+    /* Final Bible verse */
+    .closing-verse {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem 5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .closing-verse blockquote {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--champagne);
+      line-height: 1.9;
+      margin-bottom: 0.8rem;
+    }
+    .closing-verse cite {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .nav-bottom {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; gap: 1.5rem;
+      padding: 1rem 2rem 4rem;
+      flex-wrap: wrap;
+    }
+    .nav-bottom a {
+      background: rgba(245,230,200,0.12);
+      border: 1px solid var(--gold);
+      color: var(--champagne);
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .nav-bottom a:hover {
+      background: var(--gold);
+      color: var(--deep-rose);
+    }
+
+    @media (max-width: 540px) {
+      .letter-paper { padding: 2.5rem 1.8rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="devotion.html">📖 Devotion</a>
+    <a href="gallery.html">📸 Gallery</a>
+    <a href="reasons.html">💛 Reasons</a>
+    <a href="letter.html">✉️ Letter</a>
+  </nav>
+
+  <div class="seal-wrap">
+    <div class="seal" title="My heart, sealed for you">♡</div>
+    <p style="margin-top:1rem; font-family:'Crimson Text',serif; color:var(--champagne); font-style:italic; opacity:0.75;">
+      A letter, sealed with love.
+    </p>
+  </div>
+
+  <div class="letter-outer">
+    <div class="letter-paper">
+
+      <!--
+        ✏️ Change the date below to today's actual date
+      -->
+      <div class="letter-date">March 17, 2026</div>
+
+      <!--
+        ✏️ Change [Her Name] to her actual name
+      -->
+      <div class="letter-salutation">My dearest [Her Name],</div>
+
+      <div class="letter-body">
+        <!--
+          ✏️ THIS IS YOUR LETTER. Replace every paragraph below
+             with your own words. Write from the heart — don't
+             overthink it. Even simple, honest words will move her.
+
+          Here's a template to get you started:
+        -->
+
+        <p>
+          ✏️ [Start with something specific — a recent moment, something she said,
+          or simply where you are as you write this. Ground it in reality.]
+        </p>
+
+        <p>
+          ✏️ [Tell her what she means to you. Not just "you make me happy" but
+          HOW she makes you better. What has changed in you since she walked
+          into your life?]
+        </p>
+
+        <p>
+          ✏️ [Tell her what you see in her that maybe she doesn't see in herself.
+          Speak to her worth, her strength, her faith, her beauty — be specific.]
+        </p>
+
+        <p>
+          ✏️ [Talk about the future. What do you want to build with her?
+          What do you hope for? Be honest and tender here.]
+        </p>
+
+        <p>
+          ✏️ [End with a declaration — not a question, but a statement.
+          Something she can return to on a hard day and feel certain of your love.]
+        </p>
+      </div>
+
+      <div class="letter-sign">
+        <div class="closing">Forever yours,</div>
+        <!--
+          ✏️ Change [Your Name] to your actual name
+        -->
+        <div class="name">[Your Name]</div>
+      </div>
+
+      <div class="ps">
+        <!--
+          ✏️ P.S. is a great place for an inside joke, a memory,
+             or one last tender thought. Optional but sweet.
+        -->
+        P.S. ✏️ [Add a P.S. here — maybe something funny or tender that only she'd understand.]
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Closing scripture -->
+  <div class="closing-verse">
+    <blockquote>
+      "Where you go I will go, and where you stay I will stay."
+    </blockquote>
+    <cite>— Ruth 1:16</cite>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="reasons.html">← Why I Love You</a>
+    <a href="index.html">🏠 Back to Home</a>
+  </div>
+
+</body>
+</html>

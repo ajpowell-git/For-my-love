@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 7.8px;
+    line-height: 1.3;
+    background: white;
+    color: #111;
+    padding: 6px;
+  }
+  .page {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+  }
+  .col { display: flex; flex-direction: column; gap: 4px; }
+  .box {
+    border: 1.5px solid #333;
+    border-radius: 3px;
+    padding: 4px 5px;
+  }
+  .box.blue { border-color: #1a56db; background: #eff6ff; }
+  .box.green { border-color: #166534; background: #f0fdf4; }
+  .box.purple { border-color: #6b21a8; background: #faf5ff; }
+  .box.orange { border-color: #c05621; background: #fff7ed; }
+  .box.red { border-color: #991b1b; background: #fff1f1; }
+  .box.gray { border-color: #555; background: #f8f8f8; }
+  h2 {
+    font-size: 8.5px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 3px;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+  .blue h2 { color: #1a56db; }
+  .green h2 { color: #166534; }
+  .purple h2 { color: #6b21a8; }
+  .orange h2 { color: #c05621; }
+  .red h2 { color: #991b1b; }
+  .gray h2 { color: #333; }
+  .formula {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 2px 4px;
+    margin: 2px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 7.5px;
+    font-weight: bold;
+  }
+  .row { display: flex; gap: 4px; margin: 1px 0; }
+  .label { font-weight: bold; min-width: 80px; font-size: 7.5px; }
+  .val { font-family: 'Courier New', monospace; font-size: 7.3px; }
+  p, .line { margin: 1px 0; font-size: 7.5px; }
+  .tip { 
+    background: #fffbeb;
+    border-left: 2px solid #d97706;
+    padding: 2px 4px;
+    margin: 2px 0;
+    font-size: 7.2px;
+  }
+  .warn {
+    background: #fef2f2;
+    border-left: 2px solid #dc2626;
+    padding: 2px 4px;
+    margin: 2px 0;
+    font-size: 7.2px;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 2px 0; }
+  td { padding: 1px 3px; border: 0.5px solid #bbb; font-size: 7.3px; vertical-align: top; }
+  td.hd { background: #e8e8e8; font-weight: bold; }
+  .big { font-size: 9px; font-weight: bold; }
+  .title-bar {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 900;
+    background: #1e3a5f;
+    color: white;
+    padding: 3px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .sub { font-size: 7px; color: #555; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="title-bar">MATH 132 CALC II — TEST 2 CHEAT SHEET &nbsp;|&nbsp; §6.5 Arc Length &nbsp;·&nbsp; §6.6 Surface Area &nbsp;·&nbsp; §6.7 Work &nbsp;·&nbsp; §7.1-7.3 Exp/Log/Hyp</div>
+
+<div class="page">
+
+<!-- COLUMN 1 -->
+<div class="col">
+
+  <div class="box blue">
+    <h2>§6.5 Arc Length</h2>
+    <div class="formula">L = ∫[a,b] √(1 + (y')²) dx</div>
+    <div class="tip">🔑 KEY TRICK: Compute (y')², then 1+(y')² — it almost always factors into a <strong>perfect square</strong> so the √ cancels!</div>
+    <p style="font-weight:bold; margin-top:3px;">Step-by-step:</p>
+    <div class="row"><span class="label">1. Find y'</span><span>differentiate y</span></div>
+    <div class="row"><span class="label">2. Compute (y')²</span><span>square it</span></div>
+    <div class="row"><span class="label">3. Add 1</span><span>1 + (y')² = ?</span></div>
+    <div class="row"><span class="label">4. Factor</span><span>Try (A + B)² = A²+2AB+B²</span></div>
+    <div class="row"><span class="label">5. Integrate</span><span>now √ cancels → simple integral</span></div>
+    <p style="font-weight:bold; margin-top:3px;">Worked Examples:</p>
+    <table>
+      <tr><td class="hd">y =</td><td class="hd">y' =</td><td class="hd">1+(y')² =</td><td class="hd">Integrand</td></tr>
+      <tr><td>-8x-3</td><td>-8</td><td>65</td><td>√65 (constant!)</td></tr>
+      <tr><td>x⁴/4 + 1/(8x²)</td><td>x³-1/(4x³)</td><td>(x³+1/(4x³))²</td><td>x³+1/(4x³)</td></tr>
+      <tr><td>(2/3)x^(3/2)-½x^(1/2)</td><td>x^½-¼x^(-½)</td><td>(x^½+¼x^(-½))²</td><td>x^½+¼x^(-½)</td></tr>
+    </table>
+    <div class="tip">For y=-8x-3 on [-2,6]: L = √65 · 8 = 8√65 (just multiply by interval length!)</div>
+  </div>
+
+  <div class="box green">
+    <h2>§6.6 Surface Area of Revolution (about x-axis)</h2>
+    <div class="formula">S = ∫[a,b] 2π · y · √(1+(y')²) dx</div>
+    <div class="tip">🔑 SAME perfect square trick as arc length! First simplify √(1+(y')²), then multiply by y.</div>
+    <table>
+      <tr><td class="hd">Problem</td><td class="hd">Key Step</td><td class="hd">Answer</td></tr>
+      <tr><td>y=3x+4, [0,6]</td><td>y'=3, √(1+9)=√10 (constant)</td><td>156π√10</td></tr>
+      <tr><td>y=√(1-x²), [-½,½]</td><td>y cancels with √ → integrand = 2π</td><td>2π</td></tr>
+      <tr><td>Sphere y=√(8x-x²), [1,7]</td><td>√(1+(y')²)=4/y → y cancels!</td><td>S=48π m²</td></tr>
+    </table>
+    <div class="tip">Paint volume = S × thickness. Convert mm→m! 1.5mm = 0.0015m → 48π×0.0015 ≈ 0.226 m³</div>
+  </div>
+
+  <div class="box gray">
+    <h2>§6.7 Mass of Thin Bar</h2>
+    <div class="formula">m = ∫[a,b] ρ(x) dx</div>
+    <table>
+      <tr><td class="hd">ρ(x)</td><td class="hd">Interval</td><td class="hd">Answer</td></tr>
+      <tr><td>1+sin x</td><td>[0,π]</td><td>π + 2</td></tr>
+      <tr><td>x√(2-x²)</td><td>[0,1]</td><td>(2√2-1)/3  (u-sub: u=2-x²)</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- COLUMN 2 -->
+<div class="col">
+
+  <div class="box orange">
+    <h2>§6.7 Spring Work — Hooke's Law</h2>
+    <div class="formula">F = kx &nbsp;&nbsp; W = ∫[a,b] kx dx = k·[x²/2] from a to b</div>
+    <div class="tip">🔑 First FIND k from given info (F = kx). Then integrate.</div>
+    <table>
+      <tr><td class="hd">Step</td><td class="hd">What to do</td></tr>
+      <tr><td>Find k</td><td>Given F at displacement x: k = F/x</td></tr>
+      <tr><td>Stretch a→b</td><td>W = k[x²/2] from a to b = k/2·(b²-a²)</td></tr>
+      <tr><td>Compress d</td><td>W = ∫[0 to d] kx dx  (same formula, positive result)</td></tr>
+    </table>
+    <p style="font-weight:bold; margin-top:3px;">Spring Problems on Exam (k=150 N/m from F=30N at 0.2m):</p>
+    <table>
+      <tr><td class="hd">Task</td><td class="hd">Setup</td><td class="hd">Answer</td></tr>
+      <tr><td>Find k</td><td>30=k(0.2)</td><td>k=150 N/m</td></tr>
+      <tr><td>Compress 0.4m</td><td>∫[0,.4] 150x dx</td><td>12 J</td></tr>
+      <tr><td>Stretch 0.3m</td><td>∫[0,.3] 150x dx</td><td>6.75 J</td></tr>
+      <tr><td>Stretch 0.2→0.4m</td><td>∫[.2,.4] 150x dx</td><td>9 J</td></tr>
+    </table>
+    <p style="font-size:7px; color:#555;">Second spring: F=15N at 0.25m → k=60. Compress 0.24m → 1.728 J. Stretch 0.25→0.3m → 0.825 J</p>
+  </div>
+
+  <div class="box red">
+    <h2>§6.7 Pumping Water (Conical Tank)</h2>
+    <div class="formula">W = ∫ ρ·g · A(y) · (lift distance) dy</div>
+    <div class="tip">🔑 SETUP is the whole challenge. Use similar triangles to find r in terms of y.</div>
+    <p style="font-weight:bold;">Cone: H=6m, top radius R=1.5m (inverted)</p>
+    <div class="row"><span class="label">Similar triangles:</span><span class="val">r/y = 1.5/6 = 1/4  →  r = y/4</span></div>
+    <div class="row"><span class="label">Cross-section area:</span><span class="val">A(y) = π(y/4)² = πy²/16</span></div>
+    <div class="row"><span class="label">Lift distance:</span><span class="val">(6-y) for slice at height y</span></div>
+    <div class="formula">W = (1000·g·π/16) ∫[0,6] y²(6-y) dy ≈ 207,832 J</div>
+    <div class="warn">⚠ Half-depth ≠ half work! Lower water is lighter AND lifted less → only ~2% of full work.</div>
+    <p style="font-weight:bold; margin-top:2px;">General steps:</p>
+    <p>1. Sketch tank, label y from bottom</p>
+    <p>2. Similar triangles → r as function of y</p>
+    <p>3. A(y) = πr²</p>
+    <p>4. Lift = (height of top) - y</p>
+    <p>5. W = ∫ρ·g·A(y)·lift dy   (ρ_water = 1000 kg/m³, g = 9.8)</p>
+  </div>
+
+</div>
+
+<!-- COLUMN 3 -->
+<div class="col">
+
+  <div class="box purple">
+    <h2>§7.1-7.2 Derivatives — Log Differentiation (READ THIS!)</h2>
+    <div class="tip">🆘 NO IDEA? Here's exactly what to do for each type:</div>
+    <table>
+      <tr><td class="hd">Type</td><td class="hd">Rule</td></tr>
+      <tr><td>d/dx[ln u]</td><td>= u'/u  (derivative of inside ÷ inside)</td></tr>
+      <tr><td>d/dx[aˣ]</td><td>= aˣ · ln(a)  (NOT eˣ — must multiply by ln(a)!)</td></tr>
+      <tr><td>d/dx[eˣ]</td><td>= eˣ  (no change)</td></tr>
+      <tr><td>d/dx[xⁿ]</td><td>= n·xⁿ⁻¹  (even if n=e, still power rule!)</td></tr>
+    </table>
+    <p style="font-weight:bold; margin-top:3px;">🔑 LOG DIFF — when you see f(x)^g(x):</p>
+    <div class="tip">Use this whenever the exponent has x in it (like x^sinx, (x+1)^2x, x^2x)</div>
+    <table>
+      <tr><td class="hd">Step</td><td class="hd">What to write</td></tr>
+      <tr><td>1. Let</td><td>y = [the expression]</td></tr>
+      <tr><td>2. ln both sides</td><td>ln y = [exponent] · ln[base]</td></tr>
+      <tr><td>3. Differentiate</td><td>y'/y = [product rule on right side]</td></tr>
+      <tr><td>4. Solve for y'</td><td>y' = y · [right side] = [original]·[...]</td></tr>
+    </table>
+    <p style="font-weight:bold; margin-top:2px;">Examples:</p>
+    <table>
+      <tr><td class="hd">y =</td><td class="hd">ln y =</td><td class="hd">y' =</td></tr>
+      <tr><td>(x+1)^(2x)</td><td>2x·ln(x+1)</td><td>(x+1)^(2x)·[2ln(x+1)+2x/(x+1)]</td></tr>
+      <tr><td>x^(sinx)</td><td>sinx·ln x</td><td>x^sinx·[cosx·lnx + sinx/x]</td></tr>
+      <tr><td>x^(2x)</td><td>2x·ln x</td><td>x^(2x)·(2ln x+2)</td></tr>
+      <tr><td>(1+4/x)^x</td><td>x·ln(1+4/x)</td><td>(1+4/x)^x·[ln(1+4/x)-4/(x+4)]</td></tr>
+      <tr><td>2^(x²)</td><td>—</td><td>2^(x²)·ln(2)·2x</td></tr>
+    </table>
+  </div>
+
+  <div class="box blue">
+    <h2>§7.1-7.2 Integrals</h2>
+    <div class="tip">🔑 Look for f'(x)/f(x) → answer is ln|f(x)|+C. Otherwise u-substitution.</div>
+    <div class="formula">∫ aˣ dx = aˣ/ln(a) + C &nbsp;&nbsp; ∫ eˣ dx = eˣ + C</div>
+    <table>
+      <tr><td class="hd">Integral</td><td class="hd">Answer</td></tr>
+      <tr><td>∫ e^(2x)/(4+e^(2x)) dx</td><td>½·ln(4+e^(2x))+C  [u=4+e^(2x)]</td></tr>
+      <tr><td>∫ 4x·e^(-x²/2) dx</td><td>-4e^(-x²/2)+C  [u=-x²/2]</td></tr>
+      <tr><td>∫ e^√x / √x dx</td><td>2e^√x + C  [u=√x, du=dx/(2√x)]</td></tr>
+      <tr><td>∫ (eˣ+e⁻ˣ)/(eˣ-e⁻ˣ) dx</td><td>ln|eˣ-e⁻ˣ|+C  [numerator=du]</td></tr>
+      <tr><td>∫ 7^(2x) dx</td><td>7^(2x)/(2·ln7)+C</td></tr>
+      <tr><td>∫ 3^(-2x) dx</td><td>3^(-2x)/(-2·ln3)+C</td></tr>
+      <tr><td>∫ (ln²x+2lnx-1)/x dx</td><td>(lnx)³/3+(lnx)²-lnx+C  [u=lnx]</td></tr>
+      <tr><td>∫ e^(2x)/(e^(2x)+1)² dx</td><td>-1/(2(e^(2x)+1))+C</td></tr>
+    </table>
+  </div>
+
+  <div class="box green">
+    <h2>§7.1-7.2 Exponential Models</h2>
+    <div class="formula">P(t) = P₀·eᵏᵗ &nbsp; OR &nbsp; P(t) = P₀·(rate)ᵗ</div>
+    <table>
+      <tr><td class="hd">Model</td><td class="hd">Find t</td></tr>
+      <tr><td>Continuous: P=P₀eᵏᵗ</td><td>t = ln(P/P₀)/k</td></tr>
+      <tr><td>% rate r/yr: P=P₀(1+r)ᵗ</td><td>t = ln(P/P₀)/ln(1+r)</td></tr>
+      <tr><td>Doubles every d: k=ln2/d</td><td>plug k into continuous formula</td></tr>
+      <tr><td>Decay %/yr: k=ln(1-r)</td><td>same as above, k is negative</td></tr>
+    </table>
+    <div class="tip">To find t: isolate eᵏᵗ, then take ln of both sides → t = ln(ratio)/k</div>
+    <p style="font-size:7px; margin-top:2px;">Examples: 90k→120k @2.4%/yr: t=ln(4/3)/ln(1.024)≈12.4 yr | 50k→55k in 10yr: k=ln(1.1)/10, P(20)=60,500 | Tumor 8 cells, doubles/6wk→1500: t=6·ln(1500/8)/ln2≈51.9 wk</p>
+  </div>
+
+  <div class="box purple">
+    <h2>§7.3 Hyperbolic Functions — START HERE if lost</h2>
+    <div class="tip">🆘 Think of these like sin/cos but with e instead of circles.</div>
+    <table>
+      <tr><td class="hd">Definition</td><td class="hd">Formula</td></tr>
+      <tr><td>cosh x</td><td>= (eˣ + e⁻ˣ)/2</td></tr>
+      <tr><td>sinh x</td><td>= (eˣ - e⁻ˣ)/2</td></tr>
+      <tr><td>tanh x</td><td>= sinh x / cosh x = (e²ˣ-1)/(e²ˣ+1)</td></tr>
+      <tr><td>sech x</td><td>= 1/cosh x</td></tr>
+    </table>
+    <p style="font-weight:bold; margin-top:2px;">Identities:</p>
+    <div class="formula">cosh²x - sinh²x = 1 &nbsp;&nbsp; 1-tanh²x = sech²x</div>
+    <div class="formula">cosh 2x = cosh²x + sinh²x</div>
+    <p style="font-weight:bold; margin-top:2px;">Derivatives (MEMORIZE these):</p>
+    <table>
+      <tr><td class="hd">d/dx[sinh x]</td><td>= cosh x</td><td class="hd">d/dx[cosh x]</td><td>= sinh x</td></tr>
+      <tr><td class="hd">d/dx[tanh x]</td><td>= sech²x</td><td class="hd">d/dx[sech x]</td><td>= -sech x·tanh x</td></tr>
+    </table>
+    <p style="font-weight:bold; margin-top:2px;">Integrals:</p>
+    <table>
+      <tr><td class="hd">∫ cosh 2x dx</td><td>= ½sinh 2x + C  [u=2x]</td></tr>
+      <tr><td class="hd">∫ sinh x/(1+cosh x) dx</td><td>= ln(1+cosh x)+C  [u=1+cosh x]</td></tr>
+      <tr><td class="hd">∫ tanh²x dx</td><td>= x - tanh x + C  [use: tanh²=1-sech²]</td></tr>
+    </table>
+    <p style="font-weight:bold; margin-top:2px;">Proving Identities — always expand using definitions:</p>
+    <div class="tip">To prove anything: replace cosh/sinh with (eˣ±e⁻ˣ)/2, simplify algebra, done.</div>
+    <p style="font-size:7px;">Ex: tanh x = sinh/cosh = [(eˣ-e⁻ˣ)/2]/[(eˣ+e⁻ˣ)/2] → multiply top&amp;bottom by eˣ → (e²ˣ-1)/(e²ˣ+1) ✓</p>
+    <p style="font-weight:bold; margin-top:2px;">Derivative tricks (chain rule!):</p>
+    <table>
+      <tr><td class="hd">f(x)</td><td class="hd">f'(x)</td></tr>
+      <tr><td>cosh²x</td><td>2cosh x·sinh x</td></tr>
+      <tr><td>tanh²x</td><td>2tanh x·sech²x</td></tr>
+      <tr><td>ln(sech 2x)</td><td>-2tanh 2x</td></tr>
+    </table>
+    <div class="warn">⚠ SKIPPED per hint sheet: §6.6 Problem 3 (sphere zones) & §6.7 Problem 5 (water trough)</div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>

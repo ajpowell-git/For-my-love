@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Words of Devotion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --deep:   #1a0533;
+      --purple: #6b21a8;
+      --violet: #8b5cf6;
+      --periwinkle: #a5b4fc;
+      --sky:    #bae6fd;
+      --light:  #f0ebff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--deep);
+      color: var(--light);
+      overflow-x: hidden;
+    }
+
+    /* Starfield background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(165,180,252,0.6) 1px, transparent 1px),
+        radial-gradient(circle, rgba(186,230,253,0.4) 1px, transparent 1px);
+      background-size: 80px 80px, 120px 120px;
+      background-position: 0 0, 40px 40px;
+      pointer-events: none; z-index: 0;
+      animation: twinkle 8s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from { opacity: 0.4; } to { opacity: 1; } }
+
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(26,5,51,0.92);
+      backdrop-filter: blur(8px);
+      display: flex; justify-content: center; gap: 2rem;
+      padding: 1rem;
+      z-index: 100;
+      border-bottom: 1px solid var(--violet);
+    }
+    nav a {
+      text-decoration: none; color: var(--periwinkle);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--sky); }
+
+    /* Page header */
+    .page-header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 9rem 2rem 4rem;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--periwinkle), var(--sky), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.8rem;
+    }
+    .page-header p {
+      color: var(--periwinkle);
+      font-style: italic;
+      font-size: 1.05rem;
+    }
+
+    /* Divider */
+    .divider {
+      text-align: center; font-size: 1.5rem;
+      margin: 2rem 0;
+      opacity: 0.5;
+    }
+
+    /* Scripture cards */
+    .section-title {
+      position: relative; z-index: 1;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--periwinkle);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 3rem 0 1.5rem;
+    }
+
+    .verse-grid {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    .verse-card {
+      background: rgba(107,33,168,0.15);
+      border: 1px solid rgba(139,92,246,0.35);
+      border-radius: 16px;
+      padding: 2rem 1.8rem;
+      backdrop-filter: blur(6px);
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .verse-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--violet);
+    }
+    .verse-card blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: var(--light);
+      margin-bottom: 1rem;
+    }
+    .verse-card cite {
+      font-size: 0.82rem;
+      color: var(--periwinkle);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .verse-card .note {
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: var(--sky);
+      line-height: 1.6;
+      font-style: italic;
+      border-top: 1px solid rgba(139,92,246,0.3);
+      padding-top: 0.8rem;
+    }
+
+    /* Poetry section */
+    .poem-wrap {
+      position: relative; z-index: 1;
+      max-width: 680px;
+      margin: 0 auto 5rem;
+      padding: 0 2rem;
+    }
+    .poem {
+      background: linear-gradient(135deg, rgba(107,33,168,0.22), rgba(139,92,246,0.12));
+      border-left: 4px solid var(--violet);
+      border-radius: 0 16px 16px 0;
+      padding: 2.5rem 2rem;
+      backdrop-filter: blur(4px);
+    }
+    .poem h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--sky);
+      margin-bottom: 1.2rem;
+    }
+    .poem p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 2.2;
+      color: var(--light);
+    }
+    .poem .by {
+      display: block;
+      margin-top: 1.2rem;
+      font-size: 0.85rem;
+      color: var(--periwinkle);
+      font-style: normal;
+      font-family: 'Raleway', sans-serif;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-bottom {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; gap: 1.5rem;
+      padding: 3rem 2rem;
+      flex-wrap: wrap;
+    }
+    .nav-bottom a {
+      background: rgba(139,92,246,0.2);
+      border: 1px solid var(--violet);
+      color: var(--periwinkle);
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-bottom a:hover {
+      background: var(--violet);
+      color: var(--light);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="devotion.html">📖 Devotion</a>
+    <a href="gallery.html">📸 Gallery</a>
+    <a href="reasons.html">💛 Reasons</a>
+    <a href="letter.html">✉️ Letter</a>
+  </nav>
+
+  <div class="page-header">
+    <h1>Words of Devotion</h1>
+    <p>Scripture, poetry, and prayers — held together by love.</p>
+  </div>
+
+  <!-- ── SCRIPTURE SECTION ── -->
+  <div class="section-title">✦ Scripture ✦</div>
+
+  <div class="verse-grid">
+
+    <div class="verse-card">
+      <blockquote>"Love is patient, love is kind. It does not envy, it does not boast, it is not proud… it always protects, always trusts, always hopes, always perseveres."</blockquote>
+      <cite>— 1 Corinthians 13:4–7</cite>
+      <!--
+        ✏️ Add your own note below — what this verse means to you/her.
+        Example: "This is how I want to love you — every single day."
+      -->
+      <p class="note">✏️ [Add your personal note here — why this verse makes you think of her]</p>
+    </div>
+
+    <div class="verse-card">
+      <blockquote>"She is clothed with strength and dignity; she can laugh at the days to come."</blockquote>
+      <cite>— Proverbs 31:25</cite>
+      <p class="note">✏️ [Add your personal note here]</p>
+    </div>
+
+    <div class="verse-card">
+      <blockquote>"Many waters cannot quench love; rivers cannot sweep it away."</blockquote>
+      <cite>— Song of Solomon 8:7</cite>
+      <p class="note">✏️ [Add your personal note here]</p>
+    </div>
+
+    <div class="verse-card">
+      <blockquote>"I have found the one whom my soul loves."</blockquote>
+      <cite>— Song of Solomon 3:4</cite>
+      <p class="note">✏️ [Add your personal note here — maybe tell the story of when you knew]</p>
+    </div>
+
+    <div class="verse-card">
+      <blockquote>"For I am convinced that neither death nor life, neither angels nor demons… nor anything else in all creation, will be able to separate us from the love of God."</blockquote>
+      <cite>— Romans 8:38–39</cite>
+      <p class="note">✏️ [Add your personal note here]</p>
+    </div>
+
+    <div class="verse-card">
+      <blockquote>"Above all, love each other deeply, because love covers over a multitude of sins."</blockquote>
+      <cite>— 1 Peter 4:8</cite>
+      <p class="note">✏️ [Add your personal note here]</p>
+    </div>
+
+    <!--
+      ✏️ To ADD MORE VERSE CARDS, copy one block above and paste it here,
+         then swap the Bible quote and reference.
+    -->
+
+  </div>
+
+  <!-- ── POETRY SECTION ── -->
+  <div class="section-title">✦ Poetry ✦</div>
+
+  <div class="poem-wrap">
+
+    <div class="poem">
+      <h3>Written for You</h3>
+      <!--
+        ✏️ REPLACE the poem below with your own words!
+           Write it however feels natural — it doesn't have to rhyme.
+           Even just a few honest lines will mean the world to her.
+      -->
+      <p>
+        In every quiet morning,<br>
+        and in every crowded room,<br>
+        I find my eyes looking for you —<br>
+        the way light finds a window.<br><br>
+
+        You are not perfect, and neither am I,<br>
+        but somehow we fit,<br>
+        like a verse I didn't know I needed<br>
+        until I heard it in your laugh.<br><br>
+
+        I do not know all of tomorrow,<br>
+        but I know I want you in it.
+      </p>
+      <span class="by">— Written by [Your Name], for [Her Name]</span>
+    </div>
+
+    <div class="divider">✦ ✦ ✦</div>
+
+    <div class="poem">
+      <h3>An Anecdote I Carry</h3>
+      <!--
+        ✏️ Tell a short story/anecdote here — a memory you have of her,
+           a moment that made you fall harder, something funny or tender.
+           Write it like you're telling a friend. Personal = powerful.
+      -->
+      <p>
+        ✏️ [Write your favorite memory or story about her here.<br><br>
+        Example: "There was this one time we were driving and your favorite song came on
+        and you sang every single word and I realized right then that I never wanted
+        this moment to end..."]
+      </p>
+      <span class="by">— [Your Name]</span>
+    </div>
+
+  </div>
+
+  <div class="nav-bottom">
+    <a href="index.html">← Home</a>
+    <a href="gallery.html">Our Gallery →</a>
+  </div>
+
+</body>
+</html>

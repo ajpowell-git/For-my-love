@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:   #0f1f3d;
+      --navy2:  #1a2f56;
+      --gold:   #d4a843;
+      --gold2:  #f0c96a;
+      --white:  #f7f5ef;
+      --cream:  #fdf8ee;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* Gold shimmer on background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 25%, rgba(212,168,67,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 75%, rgba(212,168,67,0.06) 0%, transparent 50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(15,31,61,0.95);
+      backdrop-filter: blur(8px);
+      display: flex; justify-content: center; gap: 2rem;
+      padding: 1rem;
+      z-index: 100;
+      border-bottom: 1px solid rgba(212,168,67,0.4);
+    }
+    nav a {
+      text-decoration: none; color: var(--gold2);
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem; letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--white); }
+
+    /* Page header */
+    .page-header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 9rem 2rem 3rem;
+    }
+    .page-header h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .page-header p {
+      color: rgba(247,245,239,0.65);
+      font-style: italic;
+      font-size: 1rem;
+    }
+
+    /* Gold line divider */
+    .gold-line {
+      width: 80px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.5rem auto;
+    }
+
+    /* MASONRY GALLERY */
+    .gallery {
+      position: relative; z-index: 1;
+      columns: 3;
+      column-gap: 1.2rem;
+      max-width: 1080px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    @media (max-width: 720px) { .gallery { columns: 2; } }
+    @media (max-width: 480px) { .gallery { columns: 1; } }
+
+    .photo-wrap {
+      break-inside: avoid;
+      margin-bottom: 1.2rem;
+      position: relative;
+      cursor: pointer;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(212,168,67,0.2);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .photo-wrap:hover {
+      border-color: var(--gold);
+      transform: scale(1.015);
+    }
+    .photo-wrap img {
+      width: 100%;
+      display: block;
+      transition: filter 0.3s;
+    }
+    .photo-wrap:hover img { filter: brightness(1.05); }
+
+    /* Caption overlay */
+    .caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(15,31,61,0.88));
+      color: var(--gold2);
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      padding: 1.2rem 0.9rem 0.7rem;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+    .photo-wrap:hover .caption { transform: translateY(0); }
+
+    /* Lightbox (click to enlarge) */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 500;
+      align-items: center; justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 10px;
+      border: 2px solid var(--gold);
+      object-fit: contain;
+    }
+    .lightbox .lb-caption {
+      color: var(--gold2);
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+    .lightbox .close-btn {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-size: 2rem; color: var(--gold2);
+      cursor: pointer; background: none; border: none;
+      line-height: 1;
+    }
+
+    /* Placeholder cards for empty photo slots */
+    .placeholder {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--navy2);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.5rem;
+      color: rgba(212,168,67,0.4);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .placeholder span { font-size: 2rem; }
+
+    .nav-bottom {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; gap: 1.5rem;
+      padding: 2rem 2rem 4rem;
+      flex-wrap: wrap;
+    }
+    .nav-bottom a {
+      background: rgba(212,168,67,0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .nav-bottom a:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="devotion.html">📖 Devotion</a>
+    <a href="gallery.html">📸 Gallery</a>
+    <a href="reasons.html">💛 Reasons</a>
+    <a href="letter.html">✉️ Letter</a>
+  </nav>
+
+  <div class="page-header">
+    <h1>Our Gallery</h1>
+    <div class="gold-line"></div>
+    <p>Every photo a memory. Every memory, a treasure.</p>
+  </div>
+
+  <!--
+    ═══════════════════════════════════════════════════════
+    📸 HOW TO ADD YOUR PHOTOS:
+    1. Create a folder called "images" next to this HTML file.
+    2. Drop your photo files in there (e.g., photo1.jpg, photo2.jpg)
+    3. In each .photo-wrap below, replace the placeholder <div>
+       with: <img src="images/YOUR-FILE-NAME.jpg" alt="description"/>
+    4. Edit the caption text inside <div class="caption">
+
+    EXAMPLE of a completed entry:
+    <div class="photo-wrap" onclick="openLightbox('images/photo1.jpg','Our first date 🥰')">
+      <img src="images/photo1.jpg" alt="Our first date"/>
+      <div class="caption">Our first date 🥰</div>
+    </div>
+    ═══════════════════════════════════════════════════════
+  -->
+
+  <div class="gallery">
+
+    <!-- SLOT 1 -->
+    <div class="photo-wrap" onclick="openLightbox('images/photo1.jpg', 'Add your caption here')">
+      <div class="placeholder"><span>📸</span>Replace with<br/>images/photo1.jpg</div>
+      <div class="caption">Add your caption here</div>
+    </div>
+
+    <!-- SLOT 2 -->
+    <div class="photo-wrap" onclick="openLightbox('images/photo2.jpg', 'Add your caption here')">
+      <div class="placeholder"><span>📸</span>Replace with<br/>images/photo2.jpg</div>
+      <div class="caption">Add your caption here</div>
+    </div>
+
+    <!-- SLOT 3 -->
+    <div class="photo-wrap" onclick="openLightbox('images/photo3.jpg', 'Add your caption here')">
+      <div class="placeholder"><span>📸</span>Replace with<br/>images/photo3.jpg</div>
+      <div class="caption">Add your caption here</div>
+    </div>
+
+    <!-- SLOT 4 -->
+    <div class="photo-wrap" onclick="openLightbox('images/photo4.jpg', 'Add your caption here')">
+      <div class="placeholder"><span>📸</span>Replace with<br/>images/photo4.jpg</div>
+      <div class="caption">Add your caption here</div>
+    </div>
+
+    <!-- SLOT 5 -->
+    <div class="photo-wrap" onclick="openLightbox('images/photo5.jpg', 'Add your caption here')">
+      <div class="placeholder"><span>📸</span>Replace with<br/>images/photo5.jpg</div>
+      <div class="caption">Add your caption here</div>
+    </div>
+
+    <!-- SLOT 6 -->
+    <div class="photo-wrap" onclick="openLightbox('images/photo6.jpg', 'Add your caption here')">
+      <div class="placeholder"><span>📸</span>Replace with<br/>images/photo6.jpg</div>
+      <div class="caption">Add your caption here</div>
+    </div>
+
+    <!--
+      ✏️ To ADD MORE PHOTOS: copy one of the blocks above,
+         paste it here, and change the file name + caption.
+    -->
+
+  </div>
+
+  <!-- LIGHTBOX OVERLAY (auto-managed by JS below) -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="close-btn" onclick="closeLightbox()">✕</button>
+    <img id="lb-img" src="" alt=""/>
+    <div class="lb-caption" id="lb-cap"></div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="devotion.html">← Devotion</a>
+    <a href="reasons.html">Why I Love You →</a>
+  </div>
+
+  <script>
+    // ── LIGHTBOX ──
+    // openLightbox() is called when a photo is clicked.
+    // It shows the image full-screen so she can see it clearly.
+    function openLightbox(src, caption) {
+      document.getElementById('lb-img').src = src;
+      document.getElementById('lb-cap').textContent = caption;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+    // Close with Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>

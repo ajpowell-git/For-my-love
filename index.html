@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For My Love</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── VARIABLES ── */
+    :root {
+      --red:   #c0392b;
+      --rose:  #e8486a;
+      --pink:  #f9a8c0;
+      --blush: #fde8ee;
+      --white: #fff;
+    }
+
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--blush);
+      color: #2d0a14;
+      overflow-x: hidden;
+    }
+
+    /* ── FLOATING PETALS ── */
+    .petal {
+      position: fixed;
+      top: -40px;
+      font-size: 1.4rem;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      display: flex; justify-content: center; gap: 2rem;
+      padding: 1rem 2rem;
+      z-index: 100;
+      border-bottom: 2px solid var(--pink);
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--red);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--rose); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 20% 40%, rgba(232,72,106,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 60%, rgba(192,57,43,0.14) 0%, transparent 55%),
+        var(--blush);
+    }
+    .hero-heart {
+      font-size: 5rem;
+      animation: heartbeat 1.6s ease-in-out infinite;
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      14%      { transform: scale(1.18); }
+      28%      { transform: scale(1); }
+      42%      { transform: scale(1.1); }
+      70%      { transform: scale(1); }
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      color: var(--red);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--rose); }
+    .hero p {
+      font-size: 1.15rem;
+      color: #7a2035;
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── VERSE BANNER ── */
+    .verse-banner {
+      background: linear-gradient(135deg, var(--red), var(--rose));
+      color: var(--white);
+      padding: 2rem 3rem;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      line-height: 1.8;
+      position: relative;
+    }
+    .verse-banner cite {
+      display: block;
+      font-style: normal;
+      font-size: 0.9rem;
+      margin-top: 0.6rem;
+      opacity: 0.85;
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── CARD GRID ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+    .card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(192,57,43,0.10);
+      transition: transform 0.25s, box-shadow 0.25s;
+      text-decoration: none;
+      color: inherit;
+      display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(192,57,43,0.18);
+    }
+    .card-icon { font-size: 2.8rem; }
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--red);
+    }
+    .card p { font-size: 0.9rem; color: #7a2035; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--rose);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating petals (JS adds them) -->
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="devotion.html">📖 Devotion</a>
+    <a href="gallery.html">📸 Gallery</a>
+    <a href="reasons.html">💛 Reasons</a>
+    <a href="letter.html">✉️ Letter</a>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-heart">❤️</span>
+    <h1>This is for <em>you,</em><br>my love.</h1>
+    <!--
+      ✏️  CHANGE "your girlfriend's name" below to her actual name!
+    -->
+    <p>Every page of this site is a piece of my heart — made just for you, [Her Name]. Explore and know how deeply you are loved.</p>
+    <a href="devotion.html" style="
+      background: var(--red);
+      color: #fff;
+      padding: 0.85rem 2.4rem;
+      border-radius: 50px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(192,57,43,0.35);
+      transition: background 0.2s;
+    " onmouseover="this.style.background='#e8486a'" onmouseout="this.style.background='#c0392b'">
+      Begin the Journey →
+    </a>
+  </section>
+
+  <!-- Opening Bible verse -->
+  <div class="verse-banner">
+    "I am my beloved's and my beloved is mine."
+    <cite>— Song of Solomon 6:3</cite>
+  </div>
+
+  <!-- Navigation cards -->
+  <div class="cards">
+    <a class="card" href="devotion.html">
+      <span class="card-icon">🙏</span>
+      <h2>Words of Devotion</h2>
+      <p>Bible verses, poetry, and prayers written in love — for you.</p>
+    </a>
+    <a class="card" href="gallery.html">
+      <span class="card-icon">📷</span>
+      <h2>Our Gallery</h2>
+      <p>Moments frozen in time. My favorite pictures of us.</p>
+    </a>
+    <a class="card" href="reasons.html">
+      <span class="card-icon">💛</span>
+      <h2>Why I Love You</h2>
+      <p>A growing list of every reason you make my life better.</p>
+    </a>
+    <a class="card" href="letter.html">
+      <span class="card-icon">✉️</span>
+      <h2>My Letter to You</h2>
+      <p>From my heart, straight to yours. Words I had to write down.</p>
+    </a>
+  </div>
+
+  <footer>Made with love, just for you. ♡</footer>
+
+  <script>
+    // ── Falling petals ──
+    // Spawns emoji "petals" that drift down the screen
+    const PETALS = ['🌸','🌹','❤️','💕','🌺','💗'];
+    function spawnPetal() {
+      const el = document.createElement('div');
+      el.classList.add('petal');
+      el.textContent = PETALS[Math.floor(Math.random() * PETALS.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (6 + Math.random() * 8) + 's';
+      el.style.animationDelay = (Math.random() * 4) + 's';
+      el.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+      document.body.appendChild(el);
+      // Remove after animation to keep DOM clean
+      el.addEventListener('animationend', () => el.remove());
+    }
+    // Spawn a petal every ~800ms
+    setInterval(spawnPetal, 800);
+  </script>
+</body>
+</html>
